@@ -3,6 +3,7 @@ import { BaseApiService } from 'app/modules/core/services/base/base-api.service'
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertBarService } from 'app/modules/core/services/alert-bar/alert-bar.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -23,9 +24,44 @@ export class UserListComponent implements OnInit {
   constructor(
     public alertBarService: AlertBarService,
     private _snackBar: MatSnackBar,
-    public baseApiService: BaseApiService
+    public baseApiService: BaseApiService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
-    this.getUserlist(this.currentPage, this.pageSize);
+    this.activatedRoute.queryParams.subscribe((params) => {
+      console.log('its params' + JSON.stringify(params, null, 4));
+      if (params['page'] == undefined || params['firstName'] == undefined) {
+        this.router.navigate([], {
+          relativeTo: this.activatedRoute,
+          queryParams: {
+            page: this.currentPage + 1,
+            firstName: '',
+          },
+        });
+      }
+      if (params['page'] !== undefined && params['page'] != 0) {
+        this.currentPage = parseInt(params['page']);
+      }
+      this.getUserlist(this.currentPage, this.pageSize)
+        .then(() => {
+          if (params['firstName'] !== undefined && params['firstName'] !== '') {
+            this.search(params['firstName']);
+          }
+        })
+        .catch((e) => {
+          console.log('Error Occured while fetching userlists');
+        });
+    });
+  }
+
+  updateParams(page: number, value: string) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        page,
+        firstName: value,
+      },
+    });
   }
 
   onKey(event: any) {
@@ -57,6 +93,7 @@ export class UserListComponent implements OnInit {
           : this.allUserlist.filter((option) =>
               option.first_name.toLowerCase().startsWith(filter)
             );
+      this.updateParams(this.currentPage, filter);
     } else {
       this.userlist = this.allUserlist;
     }
@@ -64,14 +101,15 @@ export class UserListComponent implements OnInit {
 
   pageNavigations(event?: any) {
     console.log(event);
-    this.getUserlist(event.pageIndex, event.pageSize);
+    this.getUserlist(event.pageIndex + 1, event.pageSize);
+    this.updateParams(event.pageIndex + 1, '');
   }
 
   ngOnInit(): void {}
 
   async getUserlist(pageNumber: number, pageSize: number) {
     let response = await this.baseApiService.getRequestMethod(
-      `users?_page=${pageNumber + 1}&_limit=${pageSize}`
+      `users?_page=${pageNumber}&_limit=${pageSize}`
     );
     this.userlist = response;
     this.allUserlist = this.userlist;

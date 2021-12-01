@@ -32,7 +32,7 @@ export class BaseApiService {
 
   async putRequestMethod(endpoint: string, data: object) {
     return await apiClient
-      .post(endpoint, data)
+      .put(endpoint, data)
       .then((response) => {
         debugger;
         return response;

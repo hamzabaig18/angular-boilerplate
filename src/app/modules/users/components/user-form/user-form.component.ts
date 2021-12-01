@@ -104,10 +104,9 @@ export class UserFormComponent implements OnInit {
 
   // Api call for update user
   updateUser() {
-    debugger;
     if (this.initalValues != this.form.value) {
       let response = this.baseApiService.putRequestMethod(
-        'users/' + 2,
+        'users/' + this.urlParam,
         this.form.value
       );
       this.alertBarService.showAlert.next('User update successfully');
@@ -122,13 +121,13 @@ export class UserFormComponent implements OnInit {
   }
 
   async onSubmit(form: FormGroup) {
-    if (this.form.valid) {
-      this.form.reset();
-    }
     if (!this.isUserUpdating) {
       this.createUser();
     } else {
       this.updateUser();
+    }
+    if (this.form.valid) {
+      this.form.reset();
     }
   }
 }

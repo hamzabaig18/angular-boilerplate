@@ -19,7 +19,7 @@
           autocomplete="off"
           autofocus="off"
           [formControl]="searchText"
-          placeholder="Search user.."
+          placeholder="Press enter"
           type="text"
           value=""
           (keydown.enter)="onEnter($event)"
@@ -86,6 +86,7 @@
       <mat-paginator
         [length]="100"
         [pageSize]="5"
+        [pageIndex]="currentPage - 1"
         aria-label="Select page"
         (page)="pageEvent = pageNavigations($event)"
       >
