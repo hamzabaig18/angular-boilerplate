@@ -1,0 +1,16 @@
+@import "./colors";
+.btn.mat-button {
+  border-radius: 25px;
+  font-weight: 300;
+}
+.btn.btn-default.mat-button {
+  border: 1px solid $universal-color-10;
+  &:hover {
+    background-color: $universal-color-10;
+    color: $universal-color-0;
+  }
+}
+.btn.btn-primary.mat-button {
+  background: $primary-color;
+  color: $universal-color-0;
+}

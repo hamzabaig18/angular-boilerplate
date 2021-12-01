@@ -1,0 +1,198 @@
+<div class="user-form">
+  <div class="container-small">
+    <h1 *ngIf="!isUserUpdating">Create User</h1>
+    <h1 *ngIf="isUserUpdating">Update User</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+      <mat-form-field>
+        <mat-label>Email Address:</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="Your email"
+        />
+        <mat-hint>example@domain.com</mat-hint>
+        <mat-error *ngIf="form.get('email').errors?.required"
+          >Email is required</mat-error
+        >
+        <mat-error *ngIf="form.get('email').errors?.pattern"
+          >Please enter valid email</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          maxlength="59"
+          placeholder="First name"
+          formControlName="first_name"
+          #firstNameInput
+        />
+        <mat-hint>Max character: {{ firstNameInput.value.length }}/59</mat-hint>
+        <mat-error *ngIf="form.get('first_name').errors?.required"
+          >First name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          maxlength="59"
+          inputmode="tel"
+          placeholder="Last name"
+          formControlName="last_name"
+          #lastNameInput
+        />
+        <mat-hint>Max character: {{ lastNameInput.value.length }}/59</mat-hint>
+        <mat-error *ngIf="form.get('last_name').errors?.required"
+          >Last name is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Personal Id</mat-label>
+        <input
+          matInput
+          maxlength="59"
+          inputmode="tel"
+          placeholder="Personal Id"
+          formControlName="personalId"
+          #personalIdInput
+        />
+        <mat-hint>Personal Id should be exactly 11 character</mat-hint>
+        <mat-error *ngIf="form.get('personalId').errors?.required"
+          >Personal Id is required</mat-error
+        >
+        <mat-error *ngIf="form.get('personalId').errors?.pattern"
+          >Personal Id should be exactly 11 character</mat-error
+        >
+        <mat-error
+          *ngIf="
+            form.get('personalId').errors?.minlength ||
+            form.get('personalId').errors?.maxlength
+          "
+        >
+          Please enter 11 character exactly
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Profile photo</mat-label>
+        <input
+          (click)="fileInput.click()"
+          type="text"
+          readonly
+          matInput
+          formControlName="uploadFile"
+        />
+        <input
+          hidden
+          type="file"
+          id="file"
+          #fileInput
+          accept="image/*"
+          (change)="handleFileInput($event)"
+        />
+        <mat-hint>Upload the image in jpg extension</mat-hint>
+        <mat-error *ngIf="form.get('uploadFile').errors?.required">
+          Image file is only allowed
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <ngx-mat-intl-tel-input
+          formControlName="phone"
+          [enablePlaceholder]="true"
+          [enableSearch]="true"
+          [preferredCountries]="userCountryCode"
+          name="phone"
+          #phone
+        >
+        </ngx-mat-intl-tel-input>
+        <mat-hint>eg : {{ phone.selectedCountry.placeHolder }}</mat-hint>
+        <mat-error *ngIf="form.controls['phone']?.errors?.validatePhoneNumber"
+          >Invalid Number</mat-error
+        >
+      </mat-form-field>
+
+      <div class="select-gender">
+        <label>Gender</label>
+        <mat-radio-group formControlName="gender" aria-label="Select an option">
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <table cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field appearance="standard">
+              <mat-label>Country</mat-label>
+              <input
+                matInput
+                formControlName="country"
+                placeholder="Ex. Pakistan"
+              />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="standard">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" placeholder="Ex. Lahore" />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="standard">
+              <mat-label>State</mat-label>
+              <input
+                matInput
+                formControlName="state"
+                placeholder="Ex. Punjab"
+              />
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="standard">
+              <mat-label>Postal Code</mat-label>
+              <input
+                matInput
+                maxlength="5"
+                placeholder="Ex. 54000"
+                value="94043"
+                formControlName="zipCode"
+              />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Account</mat-label>
+        <input
+          matInput
+          #postalCode
+          maxlength="15"
+          placeholder=""
+          formControlName="account"
+        />
+        <mat-error *ngIf="form.get('first_name').errors?.required"
+          >At least one account is required</mat-error
+        >
+      </mat-form-field>
+
+      <div mat-dialog-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+
+    <!-- <div>{{ form.value | json }}</div> -->
+  </div>
+</div>

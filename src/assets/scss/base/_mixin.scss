@@ -1,0 +1,10 @@
+@mixin position($position-val,$top,$right,$bottom,$left){
+  position: $position-val;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+@mixin translate($x-val,$y-val){
+  transform: translate($x-val,$y-val);
+}

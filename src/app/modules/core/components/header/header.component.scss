@@ -1,0 +1,14 @@
+@import "../../../../../assets/scss/layouts/colors";
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  .mat-nav-list {
+    padding-top: 0;
+    a:hover {
+      color: $primary-color;
+    }
+    a + a {
+      padding-left: 25px;
+    }
+  }
+}

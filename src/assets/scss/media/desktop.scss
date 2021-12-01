@@ -1,0 +1,43 @@
+@import "../base/variables";
+
+@media screen and (min-width: 1025px) {
+  body {
+    font-size: $body-fonts-size + 2;
+    line-height: $body-line-height;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 15px;
+  }
+  h1 {
+    font-size: $body-fonts-size + 20;
+    line-height: $body-line-height + 24;
+  }
+  h2 {
+    font-size: $body-fonts-size + 14;
+    line-height: $body-line-height + 14;
+  }
+  h3 {
+    font-size: $body-fonts-size + 6;
+    line-height: $body-line-height + 4;
+  }
+  h4 {
+    font-size: $body-fonts-size + 2;
+    line-height: $body-line-height;
+  }
+  h5 {
+    font-size: $body-fonts-size - 2;
+    line-height: $body-line-height - 2;
+  }
+  h6 {
+    font-size: $body-fonts-size - 6;
+    line-height: $body-line-height - 6;
+  }
+  .col-4 {
+    width: 33.33%;
+  }
+}

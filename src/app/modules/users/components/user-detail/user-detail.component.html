@@ -1,0 +1,11 @@
+<div *ngIf="isData" class="user-detail section-space">
+  <div class="container">
+    <div class="media">
+      <img src="{{ user.image }}" alt="{{ user.first_name }}" />
+      <div class="media-body">
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        <p>{{ user.email }}</p>
+      </div>
+    </div>
+  </div>
+</div>

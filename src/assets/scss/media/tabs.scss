@@ -1,0 +1,42 @@
+@import "../base/variables";
+@media screen and (min-wdith: 768px) and (max-wdith: 1024px) {
+  body {
+    font-size: $body-fonts-size;
+    line-height: $body-line-height - 2;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 15px;
+  }
+  h1 {
+    font-size: $body-fonts-size + 14;
+    line-height: $body-line-height + 14;
+  }
+  h2 {
+    font-size: $body-fonts-size + 10;
+    line-height: $body-line-height + 10;
+  }
+  h3 {
+    font-size: $body-fonts-size + 6;
+    line-height: $body-line-height + 4;
+  }
+  h4 {
+    font-size: $body-fonts-size + 2;
+    line-height: $body-line-height;
+  }
+  h5 {
+    font-size: $body-fonts-size - 2;
+    line-height: $body-line-height - 4;
+  }
+  h6 {
+    font-size: $body-fonts-size - 6;
+    line-height: $body-line-height - 6;
+  }
+  .col-6-tab {
+    width: 50%;
+  }
+}
