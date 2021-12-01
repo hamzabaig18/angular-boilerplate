@@ -15,6 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 console.log('users module');
 @NgModule({
@@ -33,6 +34,7 @@ console.log('users module');
     MatCardModule,
     MatPaginatorModule,
     MatMenuModule,
+    MatSnackBarModule,
   ],
 })
 export class UsersModule {}

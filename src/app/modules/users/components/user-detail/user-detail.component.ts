@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseApiService } from 'app/modules/core/services/base/base-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserModel } from '../../models/user-class.model';
+import { AlertBarService } from 'app/modules/core/services/alert-bar/alert-bar.service';
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -13,6 +14,7 @@ export class UserDetailComponent implements OnInit {
   user: UserModel = <UserModel>{};
 
   constructor(
+    public alertBarService: AlertBarService,
     private route: ActivatedRoute,
     public baseApiService: BaseApiService
   ) {
@@ -26,7 +28,9 @@ export class UserDetailComponent implements OnInit {
     let response = await this.baseApiService.getRequestMethod(
       'users/' + this.urlParam
     );
-    debugger;
+    if (response) {
+      this.alertBarService.showAlert.next('User detail successfully generated');
+    }
     this.user = new UserModel(
       (this.user.id = response.id),
       (this.user.first_name = response.first_name),

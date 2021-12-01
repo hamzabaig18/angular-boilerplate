@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseApiService } from 'app/modules/core/services/base/base-api.service';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertBarService } from 'app/modules/core/services/alert-bar/alert-bar.service';
 
 @Component({
   selector: 'app-user-list',
@@ -18,7 +20,11 @@ export class UserListComponent implements OnInit {
   public pageSize = 5;
   public currentPage = 0;
 
-  constructor(public baseApiService: BaseApiService) {
+  constructor(
+    public alertBarService: AlertBarService,
+    private _snackBar: MatSnackBar,
+    public baseApiService: BaseApiService
+  ) {
     this.getUserlist(this.currentPage, this.pageSize);
   }
 
@@ -59,9 +65,6 @@ export class UserListComponent implements OnInit {
   pageNavigations(event?: any) {
     console.log(event);
     this.getUserlist(event.pageIndex, event.pageSize);
-    // this.Page = event.pageIndex;
-    // this.Size = event.pageSize;
-    // this.reloadData();
   }
 
   ngOnInit(): void {}
@@ -73,7 +76,7 @@ export class UserListComponent implements OnInit {
     this.userlist = response;
     this.allUserlist = this.userlist;
     if (this.userlist) {
-      console.log(this.userlist);
+      this.alertBarService.showAlert.next('User list successfully generated');
       this.isData = true;
     }
   }
@@ -83,6 +86,7 @@ export class UserListComponent implements OnInit {
       'users/' + userId
     );
     if (respone) {
+      this.alertBarService.showAlert.next('User delete successfully');
       var splicIndex = this.userlist.findIndex((el) => el.id === userId);
       this.userlist.splice(splicIndex, 1);
     }

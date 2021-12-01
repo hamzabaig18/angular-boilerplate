@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { AlertBarService } from 'app/modules/core/services/alert-bar/alert-bar.service';
 import { BaseApiService } from '../../../core/services/base/base-api.service';
 
 @Component({
@@ -17,10 +18,10 @@ export class UserFormComponent implements OnInit {
   userCountryCode: string[] = ['us'];
   initalValues: any;
   constructor(
-    public router: Router,
     public route: ActivatedRoute,
     private fb: FormBuilder,
-    public baseApiService: BaseApiService
+    public baseApiService: BaseApiService,
+    public alertBarService: AlertBarService
   ) {
     this.urlParam = this.route.snapshot.paramMap.get('id') || '';
     if (this.urlParam !== '') {
@@ -72,7 +73,7 @@ export class UserFormComponent implements OnInit {
       this.form.value
     );
     if (response) {
-      this.router.navigate(['/']);
+      this.alertBarService.showAlert.next('User create successfully');
     }
   }
 
@@ -105,7 +106,11 @@ export class UserFormComponent implements OnInit {
   updateUser() {
     debugger;
     if (this.initalValues != this.form.value) {
-      this.baseApiService.putRequestMethod('users/' + 2, this.form.value);
+      let response = this.baseApiService.putRequestMethod(
+        'users/' + 2,
+        this.form.value
+      );
+      this.alertBarService.showAlert.next('User update successfully');
     } else {
       debugger;
     }
@@ -117,6 +122,9 @@ export class UserFormComponent implements OnInit {
   }
 
   async onSubmit(form: FormGroup) {
+    if (this.form.valid) {
+      this.form.reset();
+    }
     if (!this.isUserUpdating) {
       this.createUser();
     } else {
