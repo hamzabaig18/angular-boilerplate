@@ -97,7 +97,7 @@ export class UserFormComponent implements OnInit {
       zipCode: response.zipCode,
       account: response.account,
     });
-    this.form.controls['phone'].setValue(response.phone.toString());
+    this.form.controls['phone'].setValue('+1' + response.phone.toString());
     this.initalValues = this.form.value;
     this.isData = true;
   }
